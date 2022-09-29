@@ -2,10 +2,32 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" type="text/css" href="ESTILOS.css">
 </head>
 <body>
-	
-	
+
+<canvas id="canvas" width ="1350px" height="300px"></canvas>
+
+
+<script src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js"></script>
+		
+<div class="row">
+	<div class="col-12 col-md-4">
+		<input type="file" name="form-control" id="excel-ìnput">
+	</div>
+</div>
+<div class= "placas">
+	<DIV class="contenedor-rru">
+		<button id = "b1" class ="RRU 1"><span>rru</span></button>
+		<button class= "RRU 2"><span>RRU</span></button>
+		<button class ="RRU 3"><span>RRU</span></button>
+		<button class= "RRU 4"><span>RRU</span></button>
+		<button class= "RRU 5"><span>RRU</span></button>
+		<button class= "RRU 6"><span>RRU</span></button>
+	</DIV>
+</div>
+<script src="./lee.js"></script>
+<script src="./rf.js"></script>	
 <style >
 	*{
 	color: rgb(120, 91.767, 8);
@@ -18,9 +40,10 @@
 </style>
 
 
-<canvas id="canvas" width ="1350px" height="650px"></canvas>
 
 
-<script src="sectores.js"></script>
+
+<!-- <script src="sectores.js"></script> -->
+
 </body>
 </html>

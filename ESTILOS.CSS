@@ -1,0 +1,51 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: RED;
+	font-family: 'Roboto', sans-serif;
+	min-height: 100vh;
+}
+
+
+
+/*.RRU1{
+	width: 50px;
+	
+	color: white;
+	background: green;
+	text-decoration-color: white;
+	font-family: 'Roboto', sans-serif;
+}*/
+
+
+
+.placas{
+	
+
+	width: 500px;
+	height: 300px;
+	margin: auto;
+	padding: 100px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.contenedor-rru {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 40px;
+}
+
+.RRU{
+	width: 100%;
+	height: 120px;
+	text-transform: uppercase;
+}
