@@ -48,10 +48,10 @@ for(var j=0; j<3;j++){
 		for(var i=0; i<10;i++){
 				
 				ctx1.fillStyle= "#FFFF00";
-				ctx1.fillRect(30+j*100+k*20,(10 *(1+i))+2,20,8);
+				ctx1.fillRect(30+j*200+k*35,(10 *(1+i))+2,35,8);
 				
 				ctx1.strokeStyle='#123';
-				ctx1.strokeRect(30+j*100+k*20,(10 *(1+i))+2,20,8);
+				ctx1.strokeRect(30+j*200+k*35,(10 *(1+i))+2,35,10);
 				
 		}
 	}
