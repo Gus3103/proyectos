@@ -7,6 +7,8 @@ let Band= new Array(14);
 let PlacaRRU =new Array();
 let PlacaRRU1 =new Array();
 let BandBackup=new Array();
+let PlacaCPRI=new Array();
+let Primera=0;
 
 let Presionados=new Array()
 for (var i=0 ;i<14 ; i++){
@@ -21,7 +23,7 @@ for (var i=0 ;i<14 ; i++){
 }
 
 Presionados.fill(0)
-function Evaluar(celda,estado,RRU){
+function Evaluar(celda,estado,RRU,cpri){
 	let Car = celda.length
 	let Sector = parseInt(celda[Car-1])-1
 	let Port = parseInt(celda[Car-2])-1
@@ -36,22 +38,37 @@ function Evaluar(celda,estado,RRU){
  	}
  	if (PlacaRRU.indexOf(RRU)<0){
  		PlacaRRU.push(RRU)
+ 		PlacaCPRI.push(cpri)
  		Presionados.push(0)
  	}
- 	// console.log(PlacaRRU);
+
+ 	console.log(PlacaCPRI);
 }
 
 ArchivoExcel.addEventListener("change",async function leer(){
+	Primera=1;
 	content = await readXlsxFile(ArchivoExcel.files[0]);
 	console.log(content);
 	// console.log(content[0][1]);
 	// console.log(content.length);
 	for(var i=1; i< content.length;i++){
 		// console.log(content[i][0]);
-		Evaluar(content[i][0],content[i][1],content[i][3]);
-		PlacaRRU1[i]={RRU:content[i][3],celda:content[i][0],tx1:content[i][4],tx2:content[i][5],tx3:content[i][6],tx4:content[i][7]}
-		console.log(PlacaRRU1)
+		Evaluar(content[i][0],content[i][1],content[i][3],content[i][12]);
+		PlacaRRU1[i]={RRU:content[i][3],
+			celda:content[i][0],
+			tx1:content[i][4],
+			tx2:content[i][5],
+			tx3:content[i][6],
+			tx4:content[i][7],
+			sprut:content[i][8],
+			sprux:content[i][9],
+			spbut:content[i][10],
+			spbux:content[i][11],
+			cpri:content[i][12]
+		}
+		
 	}
+	console.log(PlacaRRU1)
 	BandBackup=Band;
 	
 	dibujar_bandas()
