@@ -2,49 +2,20 @@
 let canvas1 = document.getElementById('canvas');
 ctx1=canvas1.getContext("2d")
 // Band.fill(3)
-// console.log(Band)
+console.log(ctx1)
 var Botones =new Array();
+let CeldasY=50;
+let CeldasX=100;
+let RRUY = 400;
+let RRUX = 100;
+let AnchoCelda=35;
+let Cuenta=0
+let Gabx=100;
+let Gaby=800
 
 var x=3
 var Etiqueta="";
 Etiqueta="b"+x
-
-// // Botones[3] = document.getElementById("b3");
-// var col=123;
-// // console.log(Botones[3])
-// var contador=0;
-// function cambio(){
-// 	console.log("hola cambio " + contador)
-// 	contador++;
-// 	ctx1.fillStyle= "#"+col;
-// 	col=col+10
-	
-	
-// 	// this.style.backgroundColor="#ffff00"
-// 	console.log(this.className)
-// 	for(var i =1 ; i <= PlacaRRU.length;i++){
-// 		if ("RRU "+i==this.className) Presionados[i-1]=1;
-// 		else Presionados[i-1]=0;
-// 	}
-// 	console.log(Presionados)
-// 	Etiquetar_botones()
-// }
-
-
-
-
-// for(var i =0 ; i<15 ; i++){
-// 	Etiqueta="b"+(i+1)
-// 	var func="cambio"+(i+1)
-// 	Botones[i]=document.getElementById(Etiqueta);
-// 	Botones[i].addEventListener('click',cambio,true)
-// 	console.log(Botones[i])
-// 	// console.log(Botones[0].textContent)
-// }
-
-
-
-
 
 
 
@@ -54,22 +25,28 @@ ctx1.lineWidth=1
 
 
 
-// function dibujar1(){
-//  ctx1.fillRect(10,10,50,30)
-//  ctx1.strokeRect(10,40,50,30)
-//  // console.log(content.length)
-
-// }
-
 
 
 function dibujar_bandas(){
 
 
 for(var i=0; i<14;i++){
-				ctx1.fillStyle= "#123";
-				ctx1.fillText(Bandas[i],20,20+20 *(1+i));
 				
+				ctx1.fillStyle= "#ffffff";
+				ctx1.font="10px sans-serif"
+				ctx1.fillText(Bandas[i]+" "+DescBand[i],30,16+20 *(1+i)+CeldasY);
+				
+}
+
+ctx1.fillStyle= "#ffffff";
+ctx1.font="10px sans-serif"
+
+ctx1.fillText("PORTADORAS",3,CeldasY+20);
+for (var i=0;i<3;i++){
+	for(var j=0;j<4;j++){
+		
+				ctx1.fillText(j+1,CeldasX+10+i*200+35*j,CeldasY+20);
+	}
 }	
 	
 for(var j=0; j<3;j++){
@@ -81,10 +58,13 @@ for(var j=0; j<3;j++){
 				if (Band[i][k][j]==0) {ctx1.fillStyle= "#BDBDBD"};
 				if (Band[i][k][j]==1) {ctx1.fillStyle= "#31B404"};
 				if (Band[i][k][j]==2){ ctx1.fillStyle= "#FF0000"};
-				ctx1.fillRect(30+j*200+k*35,(20 *(1+i))+2,35,18);
+				if (Band[i][k][j]==3){ ctx1.fillStyle= "#FFFF00"};
+				if (Band[i][k][j]==4){ ctx1.fillStyle= "#FFFF00"};
+				if (Band[i][k][j]==5){ ctx1.fillStyle= "#Ffff00"};
+				ctx1.fillRect(CeldasX+j*200+k*AnchoCelda,(20 *(1+i))+CeldasY+2,AnchoCelda,18);
 				
 				ctx1.strokeStyle='#123';
-				ctx1.strokeRect(30+j*200+k*35,(20 *(1+i))+2,35,20);
+				ctx1.strokeRect(CeldasX+j*200+k*AnchoCelda,(20 *(1+i))+2+CeldasY,AnchoCelda,20);
 
 				
 		}
@@ -92,8 +72,9 @@ for(var j=0; j<3;j++){
 }
 
 
-function Dibujar_RRU(PosX,PosY){
-	ctx1.fillStyle= "#00ff00"
+function Dibujar_RRU(PosX,PosY,Nombre){
+
+	
 	ctx1.strokeStyle='#123'
 	ctx1.fillRect(PosX,PosY,140,40);
 	ctx1.strokeRect(PosX,PosY,140,40);
@@ -107,36 +88,117 @@ function Dibujar_RRU(PosX,PosY){
 	ctx1.strokeRect(PosX+20,PosY+40,40,10);
 	ctx1.strokeRect(PosX+80,PosY+40,40,10);
 	ctx1.fillStyle= "#123"
-	ctx1.fillText("RRU :80",PosX+10,PosY+10);
+	ctx1.font="10px sans-serif"
+	ctx1.fillText("RRU : "+Nombre,PosX+10,PosY+10);
 }
 
-
-for (var i=0 ;i<3;i++){
-	for (var j=0 ;j<5;j++){
-		Dibujar_RRU(30+i*200,400+j*70)
-	}
-}
-Dibujar_RRU(30,400)
-
-function Mover(event){
+function Dibujar_Placas(){
 	for (var i=0 ;i<3;i++){
 		for (var j=0 ;j<5;j++){
-			if(event.pageX> 30+i*200){
-				if(event.pageX< 30+i*200+140){
-					if(event.pageY> 400+j*70){
-						if(event.pageY< 400+j*70+40){
-							console.log("RRU " +(i+j*3+1))
+			if (PlacaRRU[j*3+i]===undefined)ctx1.fillStyle= "#BDBDBD"
+			else ctx1.fillStyle= "#00ff00"
+			if (Presionados[j*3+i]==1) ctx1.fillStyle= "#ffff00"
+			Dibujar_RRU(RRUX+i*200,RRUY+j*70,PlacaRRU[j*3+i])
+		}
+	}
+}
+
+
+
+function Dibujar_gabinete(x,y){
+	ctx1.strokeStyle='#123'
+	ctx1.fillStyle= "#BDBDBD"
+	ctx1.fillRect(x,y,60,160);
+	ctx1.strokeRect(x,y,60,160);
+	for (var i = 0; i < 2; i++) {
+		for (var j = 0; j <4; j++) {
+			ctx1.fillRect(x+60+i*210,y+j*40,210,40);
+			ctx1.strokeRect(x+60+i*210,y+j*40,210,40);
+		}
+	}
+	ctx1.fillRect(x+480,y,60,160);
+	ctx1.strokeRect(x+480,y,60,160);
+}
+
+
+function asociar_celda(celda){
+	let Car = celda.length
+	let Sector = parseInt(celda[Car-1])-1
+	let Port = parseInt(celda[Car-2])-1
+	let BandaRf = celda[Car-3]
+	let Ind =Bandas.indexOf(BandaRf)
+
+ 	if (Band[Ind][Port][Sector]==0){
+ 		Band[Ind][Port][Sector]=3;
+ 	}
+ 	if (Band[Ind][Port][Sector]==1){
+
+ 		Band[Ind][Port][Sector]=4;
+ 	}
+ 	if (Band[Ind][Port][Sector]==2){
+ 		Band[Ind][Port][Sector]=5;
+ 	}
+}
+
+function Mover(event){
+	event.stopImmediatePropagation();
+	// document.removeEventListener("click", Mover)
+	Cuenta++
+	console.log("cuenta")
+	console.log(Cuenta)
+	let Ix=0;
+	let RRUcoincidente =new Array()
+	for (var i=0 ;i<3;i++){
+		for (var j=0 ;j<5;j++){
+			if(event.pageX> RRUX+i*200){
+				if(event.pageX< RRUX+i*200+140){
+					if(event.pageY> 20+RRUY+j*70){
+						if(event.pageY< 20+RRUY+j*70+40){
+							
+							
+							Presionados.fill(0)
+							Presionados[j*3+i]=1
+
+							RRUcoincidente=PlacaRRU1.filter(PlacaRRU1 => PlacaRRU1.RRU==PlacaRRU[j*3+i])
+							for(var j=0; j<3;j++){
+								for(var k=0; k<4;k++){
+									for(var i=0; i<14;i++){
+										if (Band[i][k][j]==3){
+									 		Band[i][k][j]=0;
+									 	}
+									 	if (Band[i][k][j]==4){
+
+									 		Band[i][k][j]=1;
+									 	}
+									 	if (Band[i][k][j]==5){
+									 		Band[i][k][j]=2;
+									 	}
+									}
+								}
+							}
+							
+							Ix=RRUcoincidente.length
+							for(var z=0; z<Ix;z++){
+								asociar_celda(RRUcoincidente[z]["celda"])
+							}
+							dibujar_bandas()
+
 						}
 					}
 				}
 			}
-			Dibujar_RRU(30+i*200,400+j*70)
+			
+			
+			Dibujar_Placas()
+
 		}
 	}
 	console.log(event.pageX)
 }
-
-document.addEventListener("mousemove", Mover)
+Dibujar_Placas()
+Dibujar_gabinete(Gabx,Gaby)
+Dibujar_gabinete(Gabx,Gaby+180)
+document.addEventListener("click", Mover)
 
 }
 
@@ -150,4 +212,9 @@ document.addEventListener("mousemove", Mover)
 
 // 	}
 // }
+ctx1.fillStyle= "#ffffff";
+ctx1.font="25px sans-serif"
+ctx1.fillText("NODO : MGYBCN",220,25);
 dibujar_bandas()
+
+
