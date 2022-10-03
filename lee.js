@@ -33,9 +33,15 @@ function Evaluar(celda,estado,RRU,cpri){
  	if (estado =="OK"){
  		Band[Ind][Port][Sector]=1;
  	}
- 	else{
+ 	if (estado =="BLOK"){
  		Band[Ind][Port][Sector]=2;
  	}
+ 	if (estado =="MAN"){
+ 		Band[Ind][Port][Sector]=6;
+ 	}
+ 	// else{
+ 	// 	Band[Ind][Port][Sector]=2;
+ 	// }
  	if (PlacaRRU.indexOf(RRU)<0){
  		PlacaRRU.push(RRU)
  		PlacaCPRI.push(cpri)
@@ -64,7 +70,20 @@ ArchivoExcel.addEventListener("change",async function leer(){
 			sprux:content[i][9],
 			spbut:content[i][10],
 			spbux:content[i][11],
-			cpri:content[i][12]
+			cpri:content[i][12],
+			estrru:content[i][13],
+			ESTUB:content[i][14],
+			ESTUM:content[i][15],
+			TXUMTP:content[i][16],
+			RXUMTP:content[i][17],
+			TEMPRRU:content[i][18],
+			TEMPUB:content[i][19],
+			TEMPUM:content[i][20],
+			sev:content[i][21],
+			alarma:content[i][22],
+			fecha:content[i][23],
+			desc:content[i][24]
+
 		}
 		
 	}

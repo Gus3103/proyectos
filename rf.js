@@ -13,6 +13,15 @@ let Cuenta=0
 let Gabx=100;
 let Gaby=800
 let EstBot=0;
+const ColorAus="#BDBDBD";
+const ColorOk="#00FF00";
+const ColorBl="#FF0000";
+const ColorMa="#2EFEF7";
+const ColorSel="#ffff00";
+const ColorNeg="#000000";
+const ColorBlan="#FFFFFF";
+const ColorWa="#FACC2E";
+
 
 var x=3
 var Etiqueta="";
@@ -20,8 +29,8 @@ Etiqueta="b"+x
 
 
 
-ctx1.fillStyle= "#FFFF00";
-ctx1.strokeStyle='#123'
+ctx1.fillStyle= ColorSel;
+ctx1.strokeStyle=ColorNeg
 ctx1.lineWidth=1
 
 
@@ -55,7 +64,7 @@ function Resaltar(cpri){
 	console.log("port :"+port)
 	
 	console.log("pasa por 0", EstBot)
-		ctx1.strokeStyle='#ffFF00'
+		ctx1.strokeStyle=ColorSel
 		ctx1.lineWidth=3
 		ctx1.strokeRect(Posx,Posy,30,33);
 		ctx1.lineWidth=1
@@ -82,7 +91,7 @@ function dibujar_bandas(){
 
 let Nod =""
 let Resaltado =0;
-ctx1.fillStyle= "#ffffff";
+ctx1.fillStyle= ColorBlan;
 ctx1.font="25px sans-serif"
 if (Primera==1) {
 	Nod=PlacaRRU1[1]["celda"]
@@ -95,13 +104,13 @@ ctx1.fillText("NODO : "+Nod,220,25);
 
 for(var i=0; i<14;i++){
 				
-				ctx1.fillStyle= "#ffffff";
+				ctx1.fillStyle= ColorBlan;
 				ctx1.font="10px sans-serif"
 				ctx1.fillText(Bandas[i]+" "+DescBand[i],30,16+20 *(1+i)+CeldasY);
 				
 }
 
-ctx1.fillStyle= "#ffffff";
+ctx1.fillStyle= ColorBlan;
 ctx1.font="15px sans-serif"
 ctx1.fillText("SEC 1",150,CeldasY);
 ctx1.fillText("SEC 2",350,CeldasY);
@@ -120,26 +129,32 @@ for (var i=0;i<3;i++){
 for(var j=0; j<3;j++){
 	for(var k=0; k<4;k++){
 		for(var i=0; i<14;i++){
-				ctx1.fillStyle= "#BDBDBD"
+				ctx1.fillStyle= ColorAus
 
 				// console.log(Band)
-				if (Band[i][k][j]==0) {ctx1.fillStyle= "#BDBDBD"};
-				if (Band[i][k][j]==1) {ctx1.fillStyle= "#31B404"};
-				if (Band[i][k][j]==2){ ctx1.fillStyle= "#FF0000"};
-				if (Band[i][k][j]==3){ ctx1.fillStyle= "#FFFF00"};
+				if (Band[i][k][j]==0) {ctx1.fillStyle= ColorAus};
+				if (Band[i][k][j]==1) {ctx1.fillStyle= ColorOk};
+				if (Band[i][k][j]==2){ ctx1.fillStyle= ColorBl};
+				if (Band[i][k][j]==3){ ctx1.fillStyle= ColorSel};
+				if (Band[i][k][j]==6){ ctx1.fillStyle= ColorMa};
 				if (Band[i][k][j]==4){ 
-						ctx1.strokeStyle= "#ffFF00"
+						ctx1.strokeStyle= ColorSel
 						ctx1.lineWidth=5
-						ctx1.fillStyle= "#31B404"
+						ctx1.fillStyle= ColorOk
 						Resaltado=1
 				};
 				if (Band[i][k][j]==5){
-					 ctx1.strokeStyle= "#ffff00"
+					 ctx1.strokeStyle= ColorSel
 					 ctx1.lineWidth=5
-					 ctx1.fillStyle= "#FF0000"
+					 ctx1.fillStyle= ColorBl
 					 Resaltado=1
 				};
-				
+				if (Band[i][k][j]==7){
+					 ctx1.strokeStyle= ColorSel
+					 ctx1.lineWidth=5
+					 ctx1.fillStyle= ColorMa
+					 Resaltado=1
+				};
 				
 				
 				
@@ -150,7 +165,7 @@ for(var j=0; j<3;j++){
 				}
 				else ctx1.strokeRect(CeldasX+j*200+k*AnchoCelda,(20 *(1+i))+2+CeldasY,AnchoCelda,20);
 
-				ctx1.strokeStyle='#000000';
+				ctx1.strokeStyle=ColorNeg;
 				ctx1.lineWidth=1
 				
 		}
@@ -161,7 +176,7 @@ for(var j=0; j<3;j++){
 function Dibujar_RRU(PosX,PosY,Nombre,pos){
 
 	let Roe ;
-	ctx1.strokeStyle='#000000'
+	ctx1.strokeStyle=ColorNeg
 	ctx1.fillRect(PosX,PosY,140,40);
 	ctx1.strokeRect(PosX,PosY,140,40);
 
@@ -178,13 +193,14 @@ function Dibujar_RRU(PosX,PosY,Nombre,pos){
 			if(i==2)Roe=PlacaRRU1[pos]["tx3"];
 			if(i==3)Roe=PlacaRRU1[pos]["tx4"];
 			
-			if(Roe >130) ctx1.fillStyle= "#FF0000"
+			if(Roe <=130) ctx1.fillStyle= ColorOk
+			if(Roe >130) ctx1.fillStyle= ColorWa
+			if(Roe >180) ctx1.fillStyle= ColorBl
+			
 
-			else ctx1.fillStyle= "#00ff00"
-
-			if (Roe==0)ctx1.fillStyle= "#BDBDBD"
+			if (Roe==0)ctx1.fillStyle= ColorAus
 			ctx1.fillRect(PosX+i*35,PosY-15,35,15);
-			ctx1.fillStyle= "#000000"
+			ctx1.fillStyle= ColorNeg
 			ctx1.fillText("R:"+Roe,PosX+i*35+2,PosY-3);
 			ctx1.fillStyle=color
 		}
@@ -197,10 +213,10 @@ function Dibujar_RRU(PosX,PosY,Nombre,pos){
 		console.log(PlacaRRU1[pos]["sprut"])
 		if(a<-300) {
 			console.log("a:"+ a,"pasa por menor")
-			ctx1.fillStyle= "#FF0000"
+			ctx1.fillStyle= ColorBl
 		}
 		else {
-			ctx1.fillStyle= "#00ff00"
+			ctx1.fillStyle= ColorOk
 			console.log("a:"+ a,"pasa por mayor")
 		}
 	}
@@ -209,17 +225,17 @@ function Dibujar_RRU(PosX,PosY,Nombre,pos){
 	if (Primera==1){
 		let a =PlacaRRU1[pos]["sprux"]
 		if(a<-300) {
-			ctx1.fillStyle= "#FF0000"
+			ctx1.fillStyle= ColorBl
 			console.log("a:"+ a,"pasa por menor")
 		}
 		else{
-				ctx1.fillStyle= "#00ff00"
+				ctx1.fillStyle= ColorOk
 				console.log("a:"+ a,"pasa por mayor")
 		}
 	}
 	ctx1.fillRect(PosX+80,PosY+40,40,15);
 	ctx1.strokeRect(PosX+80,PosY+40,40,15);
-	ctx1.fillStyle= "#123"
+	ctx1.fillStyle= ColorNeg
 	ctx1.font="10px sans-serif"
 	ctx1.fillText("RRU : "+Nombre,PosX+10,PosY+10);
 	if( Primera==1)ctx1.fillText("T:"+PlacaRRU1[pos]["sprut"],PosX+22,PosY+52);
@@ -227,28 +243,47 @@ function Dibujar_RRU(PosX,PosY,Nombre,pos){
 }
 
 function Dibujar_Placas(){
+	let pos;
 	for (var i=0 ;i<3;i++){
 		for (var j=0 ;j<5;j++){
-			if (PlacaRRU[j*3+i]===undefined)ctx1.fillStyle= "#BDBDBD"
-			else ctx1.fillStyle= "#00ff00"
-			if (Presionados[j*3+i]==1) ctx1.fillStyle= "#ffff00"
-			Dibujar_RRU(RRUX+i*200,RRUY+j*80,PlacaRRU[j*3+i],j*3+i+1)
+
+			for (k=1;k<PlacaRRU1.length;k++){
+					if(PlacaRRU[j*3+i]==PlacaRRU1[k]["RRU"])pos=k;
+
+			}
+
+
+			if (PlacaRRU[j*3+i]===undefined)ctx1.fillStyle= ColorAus
+			else {
+				console.log("est rru:"+PlacaRRU1[j*3+i+1]["estrru"], PlacaRRU1[pos]["RRU"])
+				if (PlacaRRU1[pos]["estrru"]=="OK")ctx1.fillStyle= ColorOk;
+				if (PlacaRRU1[pos]["estrru"]=="BLOK")ctx1.fillStyle= ColorBl;
+				if (PlacaRRU1[pos]["estrru"]=="MAN")ctx1.fillStyle= ColorMa;
+			}
+
+			if (Presionados[j*3+i]==1) ctx1.fillStyle= ColorSel
+			Dibujar_RRU(RRUX+i*200,RRUY+j*80,PlacaRRU[j*3+i],pos)
 		}
 	}
 }
 
-function Dibujar_Port(x,y){
+function Dibujar_Port(x,y,pos){
+	if(PlacaRRU1[pos]["spbut"]>=-300)ctx1.fillStyle= ColorOk;
+	else ctx1.fillStyle= ColorBl;
 	ctx1.fillRect(x,y,30,15);
 	ctx1.strokeRect(x,y,30,15);
-	ctx1.fillStyle= "#000000"
+	ctx1.fillStyle= ColorNeg
 	ctx1.font="9px sans-serif"
-	ctx1.fillText("T:-100",x+2,y+12);
-	ctx1.fillStyle= "#00ff00"
+	ctx1.fillText("T:"+PlacaRRU1[pos]["spbut"],x+2,y+12);
+
+	if(PlacaRRU1[pos]["spbux"]>=-300)ctx1.fillStyle= ColorOk;
+	else ctx1.fillStyle= ColorBl;
 	ctx1.fillRect(x,y+18,30,15);
 	ctx1.strokeRect(x,y+18,30,15);
-	ctx1.fillStyle= "#000000"
+	ctx1.fillStyle= ColorNeg
 	ctx1.font="9px sans-serif"
-	ctx1.fillText("R:-120",x+2,y+30);
+	ctx1.fillText("R:"+PlacaRRU1[pos]["spbux"],x+2,y+30);
+	console.log("valor rx :"+PlacaRRU1[pos]["spbux"],pos)
 
 }
 
@@ -256,12 +291,15 @@ function Dibujar_Port(x,y){
 function Dibujar_gabinete(x,y,Gab){
 	let Cad=""
 	let CadG=""
+	let pos=1;
+	let Parc=""
 	let CadSlot=""
+	let CadEnc=""
 	let CadPort=""
 	let puertos = new Array()
 	let Encontrado=0
-	ctx1.strokeStyle='#000000'
-	ctx1.fillStyle= "#BDBDBD"
+	ctx1.strokeStyle=ColorNeg
+	ctx1.fillStyle= ColorAus
 	ctx1.fillRect(x,y,60,160);
 	ctx1.strokeRect(x,y,60,160);
 	// console.log(Gab)
@@ -271,22 +309,26 @@ function Dibujar_gabinete(x,y,Gab){
 		for (var j = 0; j <4; j++) {
 			Encontrado=0
 			puertos=[]
+			Parc=Gab+"-0-"+(i*4+j)+"-"
 			Cad=Gab+"-0-"+(i*4+j)+"-0"
 			// console.log(Cad)
 			if (PlacaCPRI.indexOf(Cad)>=0) {
 				Encontrado=1
+				CadEnc=Parc+0
 				puertos.push(1)
 			}
 			Cad=Gab+"-0-"+(i*4+j)+"-1"
 		// console.log(Cad)
 			if (PlacaCPRI.indexOf(Cad)>=0){
 				Encontrado=2
+				CadEnc=Parc+1
 				puertos.push(2)
 			} 
 				Cad=Gab+"-0-"+(i*4+j)+"-2"
 			// console.log(Cad)
 			if (PlacaCPRI.indexOf(Cad)>=0){
 				Encontrado=3
+				CadEnc=Parc+2
 				puertos.push(3)
 				
 			} 
@@ -294,30 +336,48 @@ function Dibujar_gabinete(x,y,Gab){
 			// console.log(Cad)
 			if (PlacaCPRI.indexOf(Cad)>=0){
 				Encontrado=4
+				CadEnc=Parc+3
 				puertos.push(4)
 			} 
 				Cad=Gab+"-0-"+(i*4+j)+"-4"
 			// console.log(Cad)
 			if (PlacaCPRI.indexOf(Cad)>=0){
 				Encontrado=5
+				CadEnc=Parc+4
 				puertos.push(5)
 			}
 				Cad=Gab+"-0-"+(i*4+j)+"-5"
 			// console.log(Cad)
 			if (PlacaCPRI.indexOf(Cad)>=0){
 				Encontrado=6
+				CadEnc=Parc+5
 				puertos.push(6)
 			} 
 				// console.log(puertos)
-			if(Encontrado>0)	ctx1.fillStyle="#00ff00" ;
-			else ctx1.fillStyle="#BDBDBD" ;
+			if(Encontrado>0){
+				for(z=1;z< PlacaRRU1.length;z++){
+					if(CadEnc==PlacaRRU1[z]["cpri"])pos=z;
+				}
+				console.log("Estado UB:"+PlacaRRU1[pos]["ESTUB"],pos,"RRU:"+PlacaRRU1[pos]["RRU"])
+				if(PlacaRRU1[pos]["ESTUB"]=="OK")ctx1.fillStyle=ColorOk;
+				if(PlacaRRU1[pos]["ESTUB"]=="BLOK")ctx1.fillStyle=ColorBl;
+				if(PlacaRRU1[pos]["ESTUB"]=="MAN")ctx1.fillStyle=ColorMa;
+
+
+			}	
+			else ctx1.fillStyle=ColorAus ;
 			ctx1.fillRect(x+60+i*210,y+j*40,210,40);
 			ctx1.strokeRect(x+60+i*210,y+j*40,210,40);
 
 			for(var k=0;k<puertos.length;k++){
-				if (puertos[k]>0 )ctx1.fillStyle="#00ff00"
-				else ctx1.fillStyle="#BDBDBD" ;	
-				Dibujar_Port(x+60+3+i*210+(puertos[k]-1)*33,y+5+j*40)
+
+				for(z=1;z< PlacaRRU1.length;z++){
+					if((Parc+k)==PlacaRRU1[z]["cpri"])pos=z;
+				}
+
+				if (puertos[k]>0 )ctx1.fillStyle=ColorOk
+				else ctx1.fillStyle=ColorAus ;	
+				Dibujar_Port(x+60+3+i*210+(puertos[k]-1)*33,y+5+j*40,pos)
 			}
 			
 			
@@ -345,6 +405,9 @@ function asociar_celda(celda){
  	if (Band[Ind][Port][Sector]==2){
  		Band[Ind][Port][Sector]=5;
  	}
+ 	if (Band[Ind][Port][Sector]==6){
+ 		Band[Ind][Port][Sector]=7;
+ 	}
 }
 
 function Mover(event){
@@ -355,6 +418,7 @@ function Mover(event){
 	console.log(Cuenta)
 	let Ix=0;
 	let cpri=""
+	let pos;
 	let RRUcoincidente =new Array()
 	for (var i=0 ;i<3;i++){
 		for (var j=0 ;j<5;j++){
@@ -366,7 +430,11 @@ function Mover(event){
 							
 							Presionados.fill(0)
 							Presionados[j*3+i]=1
-							cpri=PlacaRRU1[j*3+i+1]["cpri"]
+
+							for (z=1;z<PlacaRRU1.length;z++){
+								if(PlacaRRU[j*3+i]==PlacaRRU1[z]["RRU"])pos=z;
+							}
+							cpri=PlacaRRU1[pos]["cpri"]
 							console.log("cpri:"+cpri)
 							RRUcoincidente=PlacaRRU1.filter(PlacaRRU1 => PlacaRRU1.RRU==PlacaRRU[j*3+i])
 							for(var j=0; j<3;j++){
@@ -381,6 +449,9 @@ function Mover(event){
 									 	}
 									 	if (Band[i][k][j]==5){
 									 		Band[i][k][j]=2;
+									 	}
+									 	if (Band[i][k][j]==7){
+									 		Band[i][k][j]=6;
 									 	}
 									}
 								}
@@ -427,7 +498,7 @@ document.addEventListener("click", Mover)
 
 // 	}
 // }
-ctx1.fillStyle= "#ffffff";
+ctx1.fillStyle= ColorBlan;
 ctx1.font="25px sans-serif"
 
 ctx1.fillText("NODO : ",220,25);
