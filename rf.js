@@ -176,6 +176,7 @@ for(var j=0; j<3;j++){
 function Dibujar_RRU(PosX,PosY,Nombre,pos){
 
 	let Roe ;
+	let Pl;
 	ctx1.strokeStyle=ColorNeg
 	ctx1.fillRect(PosX,PosY,140,40);
 	ctx1.strokeRect(PosX,PosY,140,40);
@@ -236,10 +237,13 @@ function Dibujar_RRU(PosX,PosY,Nombre,pos){
 	ctx1.fillRect(PosX+80,PosY+40,40,15);
 	ctx1.strokeRect(PosX+80,PosY+40,40,15);
 	ctx1.fillStyle= ColorNeg
+	ctx1.font="15px sans-serif"
+	ctx1.fillText("RRU : "+Nombre,PosX+10,PosY+14);
+	if( Primera==1)ctx1.fillText("TEMP :"+PlacaRRU1[pos]["TEMPRRU"]+"°",PosX+10,PosY+32);
 	ctx1.font="10px sans-serif"
-	ctx1.fillText("RRU : "+Nombre,PosX+10,PosY+10);
 	if( Primera==1)ctx1.fillText("T:"+PlacaRRU1[pos]["sprut"],PosX+22,PosY+52);
 	if(Primera==1)ctx1.fillText("R:"+PlacaRRU1[pos]["sprux"],PosX+82,PosY+52);
+
 }
 
 function Dibujar_Placas(){
@@ -267,23 +271,37 @@ function Dibujar_Placas(){
 	}
 }
 
-function Dibujar_Port(x,y,pos){
-	if(PlacaRRU1[pos]["spbut"]>=-300)ctx1.fillStyle= ColorOk;
-	else ctx1.fillStyle= ColorBl;
+function Dibujar_Port(x,y,pos,Pla){
+	if(Pla==0){
+		if(PlacaRRU1[pos]["spbut"]>=-300)ctx1.fillStyle= ColorOk;
+		else ctx1.fillStyle= ColorBl;
+	}
+	if(Pla==1){
+		if(PlacaRRU1[pos]["TXUMTP"]>=-300)ctx1.fillStyle= ColorOk;
+		else ctx1.fillStyle= ColorBl;
+	}
 	ctx1.fillRect(x,y,30,15);
 	ctx1.strokeRect(x,y,30,15);
 	ctx1.fillStyle= ColorNeg
 	ctx1.font="9px sans-serif"
-	ctx1.fillText("T:"+PlacaRRU1[pos]["spbut"],x+2,y+12);
+	if(Pla==0)ctx1.fillText("T:"+PlacaRRU1[pos]["spbut"],x+2,y+12);
+	if(Pla==1)ctx1.fillText("T:"+PlacaRRU1[pos]["TXUMTP"],x+2,y+12);
 
-	if(PlacaRRU1[pos]["spbux"]>=-300)ctx1.fillStyle= ColorOk;
-	else ctx1.fillStyle= ColorBl;
+	if(Pla==0){
+		if(PlacaRRU1[pos]["spbux"]>=-300)ctx1.fillStyle= ColorOk;
+		else ctx1.fillStyle= ColorBl;
+	}
+	if(Pla==1){
+		if(PlacaRRU1[pos]["RXUMTP"]>=-300)ctx1.fillStyle= ColorOk;
+		else ctx1.fillStyle= ColorBl;
+	}
 	ctx1.fillRect(x,y+18,30,15);
 	ctx1.strokeRect(x,y+18,30,15);
 	ctx1.fillStyle= ColorNeg
 	ctx1.font="9px sans-serif"
-	ctx1.fillText("R:"+PlacaRRU1[pos]["spbux"],x+2,y+30);
-	console.log("valor rx :"+PlacaRRU1[pos]["spbux"],pos)
+	if(Pla==0)ctx1.fillText("R:"+PlacaRRU1[pos]["spbux"],x+2,y+30);
+	if(Pla==1)ctx1.fillText("R:"+PlacaRRU1[pos]["RXUMTP"],x+2,y+30);
+	// console.log("valor rx :"+PlacaRRU1[pos]["spbux"],pos)
 
 }
 
@@ -299,9 +317,15 @@ function Dibujar_gabinete(x,y,Gab){
 	let puertos = new Array()
 	let Encontrado=0
 	ctx1.strokeStyle=ColorNeg
-	ctx1.fillStyle= ColorAus
+	if(Primera==0)ctx1.fillStyle= ColorAus
+	else ctx1.fillStyle =ColorOk;
+	
 	ctx1.fillRect(x,y,60,160);
 	ctx1.strokeRect(x,y,60,160);
+	ctx1.fillStyle= ColorNeg;
+	ctx1.font="15px sans-serif"
+
+	if(Primera==1)ctx1.fillText("FAN",x+10,y+80);
 	// console.log(Gab)
 	
 	console.log(CadG)
@@ -358,7 +382,7 @@ function Dibujar_gabinete(x,y,Gab){
 				for(z=1;z< PlacaRRU1.length;z++){
 					if(CadEnc==PlacaRRU1[z]["cpri"])pos=z;
 				}
-				console.log("Estado UB:"+PlacaRRU1[pos]["ESTUB"],pos,"RRU:"+PlacaRRU1[pos]["RRU"])
+				// console.log("Estado UB:"+PlacaRRU1[pos]["ESTUB"],pos,"RRU:"+PlacaRRU1[pos]["RRU"])
 				if(PlacaRRU1[pos]["ESTUB"]=="OK")ctx1.fillStyle=ColorOk;
 				if(PlacaRRU1[pos]["ESTUB"]=="BLOK")ctx1.fillStyle=ColorBl;
 				if(PlacaRRU1[pos]["ESTUB"]=="MAN")ctx1.fillStyle=ColorMa;
@@ -366,8 +390,36 @@ function Dibujar_gabinete(x,y,Gab){
 
 			}	
 			else ctx1.fillStyle=ColorAus ;
+			console.log("condiciones: i:"+i,"j:"+j,"Primera:"+Primera,"gab:"+Gab)
+			if(i==1 && j==3 && Primera==1 && Gab==0)	{
+				console.log("Pasa")
+				puertos=[1];
+				if(PlacaRRU1[1]["ESTUM"]=="OK")ctx1.fillStyle=ColorOk;
+				if(PlacaRRU1[1]["ESTUM"]=="BLOK")ctx1.fillStyle=ColorBl;
+				if(PlacaRRU1[1]["ESTUM"]=="MAN")ctx1.fillStyle=ColorMa;
+				
+				// Dibujar_Port(x+60+3+i*210+33,y+5+j*40,1,1)
+			}
+
 			ctx1.fillRect(x+60+i*210,y+j*40,210,40);
 			ctx1.strokeRect(x+60+i*210,y+j*40,210,40);
+			ctx1.fillStyle= ColorNeg;
+			ctx1.font="15px sans-serif"
+			pl=0;
+			if(Encontrado>0){
+				ctx1.fillText("UBBP",x+60+i*210+140,y+j*40+15);
+				ctx1.fillText("TEMP:"+PlacaRRU1[pos]["TEMPUB"]+"°",x+60+i*210+140,y+j*40+32);
+				
+			}
+			if(i==1 && j==3 && Primera==1 && Gab==0){
+				pl=1;
+				ctx1.fillStyle= ColorNeg;
+				ctx1.font="15px sans-serif"
+				ctx1.fillText("UMPT",x+60+i*210+140,y+j*40+15);
+				ctx1.fillText("TEMP:"+PlacaRRU1[1]["TEMPUM"]+"°",x+60+i*210+140,y+j*40+32);
+				
+			}
+				
 
 			for(var k=0;k<puertos.length;k++){
 
@@ -377,14 +429,24 @@ function Dibujar_gabinete(x,y,Gab){
 
 				if (puertos[k]>0 )ctx1.fillStyle=ColorOk
 				else ctx1.fillStyle=ColorAus ;	
-				Dibujar_Port(x+60+3+i*210+(puertos[k]-1)*33,y+5+j*40,pos)
+
+				Dibujar_Port(x+60+3+i*210+(puertos[k]-1)*33,y+5+j*40,pos,pl)
 			}
 			
-			
+
 		}
 	}
-	ctx1.fillRect(x+480,y,60,160);
-	ctx1.strokeRect(x+480,y,60,160);
+	if(Primera==0)ctx1.fillStyle= ColorAus
+	else ctx1.fillStyle =ColorOk;
+	ctx1.fillRect(x+480,y,60,80);
+	ctx1.strokeRect(x+480,y,60,80);
+	ctx1.fillRect(x+480,y+80,60,80);
+	ctx1.strokeRect(x+480,y+80,60,80);
+	ctx1.fillStyle= ColorNeg;
+	ctx1.font="15px sans-serif"
+
+	if(Primera==1)ctx1.fillText("UPEU",x+490,y+40);
+	if(Primera==1)ctx1.fillText("UPEU",x+490,y+120);
 }
 
 
@@ -479,11 +541,12 @@ function Mover(event){
 			Resaltar(cpri)
 		}
 	}
-	console.log(event.pageX)
+	
 }
 Dibujar_Placas()
 Dibujar_gabinete(Gabx,Gaby,0)
 Dibujar_gabinete(Gabx,Gaby+180,1)
+
 document.addEventListener("click", Mover)
 
 }
@@ -498,6 +561,8 @@ document.addEventListener("click", Mover)
 
 // 	}
 // }
+
+
 ctx1.fillStyle= ColorBlan;
 ctx1.font="25px sans-serif"
 

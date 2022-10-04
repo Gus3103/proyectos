@@ -51,6 +51,64 @@ function Evaluar(celda,estado,RRU,cpri){
  	console.log(PlacaCPRI);
 }
 
+function Crear_Tabla(){
+	let table = document.createElement('table');
+	let thead = document.createElement('thead');
+	let tbody = document.createElement('tbody');
+
+	table.appendChild(thead);
+	table.appendChild(tbody);
+	// cuerpo=document.getElementById("TABLE")
+	// console.log(cuerpo)
+// Adding the entire table to the body tag
+	document.getElementById("body").appendChild(table);
+
+	let row_1 = document.createElement('tr');
+	let heading_1 = document.createElement('th');
+	heading_1.innerHTML = "FECHA";
+	let heading_2 = document.createElement('th');
+	heading_2.innerHTML = "ALARMA";
+	let heading_3 = document.createElement('th');
+	heading_3.innerHTML = "SEVERIDAD";
+	let heading_4 = document.createElement('th');
+	heading_4.innerHTML = "DETALLE";
+	row_1.appendChild(heading_1);
+	row_1.appendChild(heading_2);
+	row_1.appendChild(heading_3);
+	row_1.appendChild(heading_4);
+	thead.appendChild(row_1)
+	let filas;
+	let Col =new Array
+	let Valor;
+	for (i=1;i<PlacaRRU1.length ; i++){
+
+			Valor=PlacaRRU1[i]["fecha"];
+			console.log("valor:"+Valor)
+			if(Valor!=null){
+				console.log("pasa")
+				filas = document.createElement('tr');
+				for (j=1;j<5 ; j++){
+					
+
+					 Col[j]= document.createElement('td');
+					 if(j==1)Valor=PlacaRRU1[i]["fecha"].toISOString();
+					 if(j==2)Valor=PlacaRRU1[i]["alarma"]
+					 if(j==3)Valor=PlacaRRU1[i]["sev"]
+					 if(j==3)Valor=PlacaRRU1[i]["desc"]
+					 Col[j].innerHTML = Valor;
+					 filas.appendChild(Col[j]);
+
+			
+				}
+				tbody.appendChild(filas);
+			}
+	}
+
+}
+
+
+
+
 ArchivoExcel.addEventListener("change",async function leer(){
 	Primera=1;
 	content = await readXlsxFile(ArchivoExcel.files[0]);
@@ -91,6 +149,7 @@ ArchivoExcel.addEventListener("change",async function leer(){
 	BandBackup=Band;
 	
 	dibujar_bandas()
+	Crear_Tabla()
 	// Etiquetar_botones()
 })
 
